@@ -1,0 +1,22 @@
+{
+  "name": "nanoclaw-workshop",
+  "version": "1.0.0",
+  "description": "Blueprint catalog registry for NanoClaw agent workflows",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build-index.js",
+    "validate": "node scripts/validate-blueprints.js",
+    "validate:build": "npm run validate && npm run build"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/davekim917/nanoclaw-workshop.git"
+  },
+  "license": "MIT"
+}

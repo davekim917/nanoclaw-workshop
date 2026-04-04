@@ -1,0 +1,39 @@
+{
+  "id": "inbox-zero-bot",
+  "version": "1.0.0",
+  "name": "Inbox Zero Bot",
+  "description": "Automatically triages your unread Gmail inbox each morning. Reads up to a configurable number of recent unread emails, categorizes them by urgency and action type, produces a concise summary, and suggests concrete next steps — helping you reach inbox zero without reading every message yourself.",
+  "trade": "email",
+  "trigger_type": "scheduled",
+  "estimated_setup_time": "2 min",
+  "author": "nanoclaw",
+  "verified": true,
+  "tags": ["email", "gmail", "triage", "inbox-zero", "productivity"],
+  "integrations": ["gws-gmail"],
+  "parameters": [
+    {
+      "key": "schedule",
+      "label": "Schedule (cron)",
+      "description": "When to run the inbox triage. Default is 9 AM on weekdays.",
+      "type": "cron",
+      "default": "0 9 * * 1-5",
+      "required": false
+    },
+    {
+      "key": "account",
+      "label": "Gmail Account",
+      "description": "The Gmail address to triage (e.g. you@gmail.com).",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "max_emails",
+      "label": "Max Emails to Process",
+      "description": "Maximum number of unread emails to triage in a single run.",
+      "type": "number",
+      "default": 20,
+      "required": false
+    }
+  ],
+  "prompt_template": "You are an expert email triage assistant for {{group_name}}.\n\nGmail account: {{account}}\n\n**Task:** Read the most recent {{max_emails}} unread emails from the inbox and triage them.\n\nUse gws-gmail to:\n1. Fetch up to {{max_emails}} unread messages from the inbox\n2. For each message, read the sender, subject, date, and body snippet\n\n**Triage each email into one of these categories:**\n\n- 🔴 **Action Required** — Needs a reply, decision, or concrete action from you\n- 🟡 **FYI / Review** — Worth reading but no action needed today\n- 📋 **Newsletter / Digest** — Subscription content, can be read later or archived\n- 🗑️ **Junk / Auto** — Automated notifications, marketing, or spam that can be deleted\n\n**Output format:**\n\nPresent a grouped summary:\n\n```\n📬 INBOX TRIAGE — [date] ([N] unread)\n\n🔴 Action Required ([count])\n• [Sender] — [Subject] — [1-sentence summary + suggested action]\n\n🟡 FYI / Review ([count])\n• [Sender] — [Subject] — [1-sentence summary]\n\n📋 Newsletters ([count])\n• [list of subjects, no detail needed]\n\n🗑️ Junk ([count])\n• [count] automated/marketing emails — safe to archive\n```\n\nFinish with a **bottom line**: how many emails genuinely need attention today, and any that are time-sensitive (deadlines, meeting requests, etc.).\n\nDo not open, reply to, or modify any emails. Read-only access only."
+}

@@ -1,0 +1,149 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/davekim917/nanoclaw-workshop/schema/blueprint-schema.json",
+  "title": "NanoClaw Blueprint",
+  "description": "Schema for NanoClaw Workshop blueprint.json files",
+  "type": "object",
+  "required": [
+    "id",
+    "version",
+    "name",
+    "description",
+    "trade",
+    "trigger_type",
+    "estimated_setup_time",
+    "author",
+    "verified",
+    "tags",
+    "integrations",
+    "parameters",
+    "prompt_template"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Unique identifier in kebab-case, must match the directory name"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version string"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable display name"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "description": "One-paragraph description of what this blueprint does"
+    },
+    "trade": {
+      "type": "string",
+      "enum": ["productivity", "dev", "email", "research", "creative", "ops"],
+      "description": "Category this blueprint belongs to"
+    },
+    "trigger_type": {
+      "type": "string",
+      "enum": ["scheduled", "on-demand"],
+      "description": "How this blueprint is triggered"
+    },
+    "estimated_setup_time": {
+      "type": "string",
+      "pattern": "^\\d+ min$",
+      "description": "Estimated time to set up, e.g. '2 min'"
+    },
+    "author": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Author of the blueprint"
+    },
+    "verified": {
+      "type": "boolean",
+      "description": "Whether this blueprint has been verified by the NanoClaw team"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+      },
+      "minItems": 1,
+      "description": "Array of lowercase kebab-case tags"
+    },
+    "integrations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "description": "List of tool/integration names this blueprint requires"
+    },
+    "parameters": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/parameter"
+      },
+      "description": "Configurable parameters for this blueprint"
+    },
+    "prompt_template": {
+      "type": "string",
+      "minLength": 20,
+      "description": "Mustache-style prompt template with {{param_key}} substitution"
+    }
+  },
+  "definitions": {
+    "parameter": {
+      "type": "object",
+      "required": ["key", "label", "description", "type", "required"],
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Parameter key used in prompt_template substitution"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable label shown in the UI"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "description": "What this parameter does"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["text", "cron", "select", "number", "boolean"],
+          "description": "Input type for this parameter"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Valid options (required when type is 'select')"
+        },
+        "default": {
+          "description": "Default value for this parameter"
+        },
+        "required": {
+          "type": "boolean",
+          "description": "Whether this parameter must be provided"
+        }
+      },
+      "if": {
+        "properties": {
+          "type": { "const": "select" }
+        }
+      },
+      "then": {
+        "required": ["options"]
+      }
+    }
+  }
+}

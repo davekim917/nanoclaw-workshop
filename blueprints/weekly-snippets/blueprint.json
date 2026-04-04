@@ -1,0 +1,40 @@
+{
+  "id": "weekly-snippets",
+  "version": "1.0.0",
+  "name": "Weekly Snippets",
+  "description": "Compiles a weekly activity summary every Friday afternoon. Gathers git commits from the week, notable conversations, and completed tasks, then synthesizes a concise 'snippets' report suitable for standups, team wikis, or personal reflection.",
+  "trade": "productivity",
+  "trigger_type": "scheduled",
+  "estimated_setup_time": "3 min",
+  "author": "nanoclaw",
+  "verified": true,
+  "tags": ["weekly", "summary", "git", "productivity", "snippets", "reporting"],
+  "integrations": ["git", "web-search"],
+  "parameters": [
+    {
+      "key": "schedule",
+      "label": "Schedule (cron)",
+      "description": "When to compile the weekly summary. Default is 5 PM every Friday.",
+      "type": "cron",
+      "default": "0 17 * * 5",
+      "required": false
+    },
+    {
+      "key": "include_commits",
+      "label": "Include Git Commits",
+      "description": "Whether to scan git repos for commits made this week.",
+      "type": "boolean",
+      "default": true,
+      "required": false
+    },
+    {
+      "key": "include_tasks",
+      "label": "Include Completed Tasks",
+      "description": "Whether to include completed tasks and backlog items closed this week.",
+      "type": "boolean",
+      "default": true,
+      "required": false
+    }
+  ],
+  "prompt_template": "You are a productivity assistant compiling the weekly snippets report for {{group_name}}.\n\nToday is {{current_date}} (end of week). Compile a \"Weekly Snippets\" report covering this past week (Monday through today).\n\n{{#include_commits}}\n**Commits:** Use the `mcp__nanoclaw__scan_commits` tool to retrieve commits from this week. Group them by repository and summarize what changed — focus on the \"what\" and \"why\", not just the commit message verbatim. Skip merge commits and version bumps.\n{{/include_commits}}\n\n{{#include_tasks}}\n**Tasks:** Use `mcp__nanoclaw__list_backlog` to find tasks that were completed or closed this week. List them concisely.\n{{/include_tasks}}\n\n**Format the report as:**\n\n```\n📋 WEEKLY SNIPPETS — Week of [Mon date] – [Fri date]\n\n🚢 Shipped\n[Bulleted list of meaningful work completed — features, fixes, merges, deployments]\n\n📝 Progress\n[Work that advanced but isn't done yet]\n\n✅ Tasks Closed\n[List of backlog/task items marked complete]\n\n⚠️ Blockers / Carry-overs\n[Anything stuck or rolling into next week]\n\n📌 Next Week\n[1–3 priorities for the coming week, inferred from open work]\n```\n\nKeep each bullet to one line. Aim for signal over volume — 10 tight bullets beats 30 vague ones. The report should take under 3 minutes to read.\n\nIf commits or tasks are sparse (light week), say so honestly rather than padding the report."
+}

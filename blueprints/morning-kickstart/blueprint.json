@@ -1,0 +1,52 @@
+{
+  "id": "morning-kickstart",
+  "version": "1.0.0",
+  "name": "Morning Kickstart",
+  "description": "Starts your workday with a personalized briefing: pulls today's calendar events, optionally fetches the local weather forecast, and compiles your top priorities so you hit the ground running every morning.",
+  "trade": "productivity",
+  "trigger_type": "scheduled",
+  "estimated_setup_time": "2 min",
+  "author": "nanoclaw",
+  "verified": true,
+  "tags": ["calendar", "briefing", "daily", "weather", "productivity"],
+  "integrations": ["gws-calendar", "web-search"],
+  "parameters": [
+    {
+      "key": "schedule",
+      "label": "Schedule (cron)",
+      "description": "When to run the morning briefing. Default is 8 AM on weekdays.",
+      "type": "cron",
+      "default": "0 8 * * 1-5",
+      "required": false
+    },
+    {
+      "key": "timezone",
+      "label": "Timezone",
+      "description": "Your local timezone for calendar and weather display.",
+      "type": "select",
+      "options": [
+        "America/New_York",
+        "America/Chicago",
+        "America/Denver",
+        "America/Los_Angeles",
+        "Europe/London",
+        "Europe/Paris",
+        "Europe/Berlin",
+        "Asia/Tokyo",
+        "Asia/Singapore",
+        "Australia/Sydney"
+      ],
+      "default": "America/New_York",
+      "required": false
+    },
+    {
+      "key": "include_weather",
+      "label": "Include weather forecast",
+      "description": "Whether to fetch and include today's weather forecast in the briefing.",
+      "type": "boolean",
+      "default": true,
+      "required": false
+    }
+  ],
+  "prompt_template": "Good morning! You are a personal assistant delivering a concise morning briefing for {{group_name}}.\n\nToday is {{current_date}}. Timezone: {{timezone}}.\n\nPlease do the following:\n\n1. **Calendar** — Use gws-calendar to fetch today's events. List each event with its time, title, and location (if any). Flag any back-to-back meetings or conflicts.\n\n2. **Priorities** — Based on today's schedule, identify the top 2–3 focus blocks where deep work is possible. If the calendar is clear, suggest morning, midday, and afternoon focus windows.\n\n{{#include_weather}}\n3. **Weather** — Search the web for today's weather forecast. Include the high/low temperature, precipitation chance, and any notable conditions (storms, extreme heat, etc.).\n{{/include_weather}}\n\n4. **Quick wins** — Suggest 1–2 quick tasks that could be knocked out in under 15 minutes to build momentum.\n\nFormat the briefing as a clean, scannable message. Lead with the most time-sensitive item. Keep it under 300 words. Sign off with an encouraging one-liner."
+}

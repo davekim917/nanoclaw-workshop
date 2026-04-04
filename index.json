@@ -1,0 +1,116 @@
+{
+  "schema_version": "1",
+  "generated_at": "2026-04-04T22:51:00.388Z",
+  "blueprints": [
+    {
+      "id": "code-reviewer",
+      "version": "1.0.0",
+      "name": "Code Reviewer",
+      "description": "Performs a thorough code review of a GitHub pull request or local diff. Analyzes the changes for bugs, security vulnerabilities, performance issues, and style problems, then produces structured, actionable feedback organized by severity.",
+      "trade": "dev",
+      "trigger_type": "on-demand",
+      "estimated_setup_time": "1 min",
+      "author": "nanoclaw",
+      "verified": true,
+      "tags": [
+        "code-review",
+        "github",
+        "pull-request",
+        "dev",
+        "security",
+        "quality"
+      ],
+      "integrations": [
+        "git",
+        "gh"
+      ]
+    },
+    {
+      "id": "git-rescue",
+      "version": "1.0.0",
+      "name": "Git Rescue",
+      "description": "Diagnoses and recovers troubled Git repositories. Analyzes the current repo state to detect common problems — merge conflicts, detached HEAD, diverged branches, lost commits, corrupted index — and provides precise, step-by-step remediation instructions.",
+      "trade": "dev",
+      "trigger_type": "on-demand",
+      "estimated_setup_time": "1 min",
+      "author": "nanoclaw",
+      "verified": true,
+      "tags": [
+        "git",
+        "debugging",
+        "dev",
+        "recovery",
+        "version-control"
+      ],
+      "integrations": [
+        "git"
+      ]
+    },
+    {
+      "id": "inbox-zero-bot",
+      "version": "1.0.0",
+      "name": "Inbox Zero Bot",
+      "description": "Automatically triages your unread Gmail inbox each morning. Reads up to a configurable number of recent unread emails, categorizes them by urgency and action type, produces a concise summary, and suggests concrete next steps — helping you reach inbox zero without reading every message yourself.",
+      "trade": "email",
+      "trigger_type": "scheduled",
+      "estimated_setup_time": "2 min",
+      "author": "nanoclaw",
+      "verified": true,
+      "tags": [
+        "email",
+        "gmail",
+        "triage",
+        "inbox-zero",
+        "productivity"
+      ],
+      "integrations": [
+        "gws-gmail"
+      ]
+    },
+    {
+      "id": "morning-kickstart",
+      "version": "1.0.0",
+      "name": "Morning Kickstart",
+      "description": "Starts your workday with a personalized briefing: pulls today's calendar events, optionally fetches the local weather forecast, and compiles your top priorities so you hit the ground running every morning.",
+      "trade": "productivity",
+      "trigger_type": "scheduled",
+      "estimated_setup_time": "2 min",
+      "author": "nanoclaw",
+      "verified": true,
+      "tags": [
+        "calendar",
+        "briefing",
+        "daily",
+        "weather",
+        "productivity"
+      ],
+      "integrations": [
+        "gws-calendar",
+        "web-search"
+      ]
+    },
+    {
+      "id": "weekly-snippets",
+      "version": "1.0.0",
+      "name": "Weekly Snippets",
+      "description": "Compiles a weekly activity summary every Friday afternoon. Gathers git commits from the week, notable conversations, and completed tasks, then synthesizes a concise 'snippets' report suitable for standups, team wikis, or personal reflection.",
+      "trade": "productivity",
+      "trigger_type": "scheduled",
+      "estimated_setup_time": "3 min",
+      "author": "nanoclaw",
+      "verified": true,
+      "tags": [
+        "weekly",
+        "summary",
+        "git",
+        "productivity",
+        "snippets",
+        "reporting"
+      ],
+      "integrations": [
+        "git",
+        "web-search"
+      ]
+    }
+  ]
+}

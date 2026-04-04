@@ -1,0 +1,23 @@
+{
+  "id": "git-rescue",
+  "version": "1.0.0",
+  "name": "Git Rescue",
+  "description": "Diagnoses and recovers troubled Git repositories. Analyzes the current repo state to detect common problems — merge conflicts, detached HEAD, diverged branches, lost commits, corrupted index — and provides precise, step-by-step remediation instructions.",
+  "trade": "dev",
+  "trigger_type": "on-demand",
+  "estimated_setup_time": "1 min",
+  "author": "nanoclaw",
+  "verified": true,
+  "tags": ["git", "debugging", "dev", "recovery", "version-control"],
+  "integrations": ["git"],
+  "parameters": [
+    {
+      "key": "repo_path",
+      "label": "Repository Path",
+      "description": "Absolute path to the Git repository that needs rescue.",
+      "type": "text",
+      "required": true
+    }
+  ],
+  "prompt_template": "You are an expert Git troubleshooter. A user needs help recovering a git repository.\n\nRepository path: {{repo_path}}\n\n**Step 1 — Assess the situation**\n\nRun the following diagnostic commands to understand the repo state:\n```\ngit -C {{repo_path}} status\ngit -C {{repo_path}} log --oneline -20\ngit -C {{repo_path}} branch -a\ngit -C {{repo_path}} stash list\ngit -C {{repo_path}} reflog --oneline -30\ngit -C {{repo_path}} remote -v\n```\n\n**Step 2 — Identify the problem(s)**\n\nBased on the output, identify which issues are present. Common issues to check for:\n- Merge conflicts (files in CONFLICTED state)\n- Detached HEAD (not on any branch)\n- Diverged branch (local and remote have different commits)\n- Untracked or accidentally deleted files\n- Lost commits (commits exist in reflog but not on branch)\n- Corrupt index (git status hangs or errors)\n- Accidentally committed secrets or large files\n- Wrong base branch (rebased onto wrong parent)\n\n**Step 3 — Provide rescue instructions**\n\nFor each problem found:\n1. Explain clearly what happened and why it's a problem\n2. Provide the exact git commands to fix it, in order\n3. Warn about any commands that are destructive or cannot be undone\n4. Suggest a verification command to confirm the fix worked\n\n**Important:** Always prefer safe, reversible solutions. If a destructive command (reset --hard, push --force) is necessary, explicitly call it out and ask for confirmation before proceeding. When in doubt, use `git stash` to preserve work-in-progress first."
+}
