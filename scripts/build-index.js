@@ -61,6 +61,14 @@ function main() {
       process.exit(1);
     }
 
+    // Guard against missing required array fields (prevents UI runtime crash)
+    if (!Array.isArray(blueprint.tags) || !Array.isArray(blueprint.integrations)) {
+      console.error(
+        `ERROR: blueprint "${dir}" missing required array fields (tags, integrations) in ${blueprintPath}`
+      );
+      process.exit(1);
+    }
+
     // Build summary object (omit excluded fields)
     const summary = {};
     for (const [key, value] of Object.entries(blueprint)) {
